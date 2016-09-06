@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using wsad_app.Models.Account;
 
 namespace wsad_app.Controllers
 {
@@ -33,9 +34,9 @@ namespace wsad_app.Controllers
             return View();
         }
 
-        public ActionResult Login(string username, string password)
+        public ActionResult Login(AccountLoginViewModel login)
         {
-            return Content("Hello " + username + "! welcome to our application. Please have a nice time.");
+            return Content("Hello " + login.Username + "! welcome to our application. Please have a nice time. Your password is " + login.Password);
 
             //Validate a username and password(no empties)
 

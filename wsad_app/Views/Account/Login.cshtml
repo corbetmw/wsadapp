@@ -1,4 +1,4 @@
-﻿
+﻿@model wsad_app.Models.Account.AccountLoginViewModel
 @{
     ViewBag.Title = "Login";
 }
@@ -7,8 +7,14 @@
 
 <form method="post" action="/Account/Login">
     <legend>Login Page</legend>
-    <label>Username: </label><input type="text" name="username" /> <br />
-    <label>Password: </label><input type="password" name="password" /> <br />
+    <label>Username: </label>
+        @Html.TextBoxFor(model => model.Username)
+        @*<input type="text" name="username" />*@ <br />
+    <label>Password: </label>
+        @Html.PasswordFor(model => model.Password)
+        @*<input type="password" name="password" />*@ <br />
+    <label>Remember Me</label>
+        @Html.CheckBoxFor(model => model.RememberMe) <br />
     <button type="submit" name="login">Log In</button>
     <a href="/Account/Create">Create and Account</a>
 </form>
