@@ -20,9 +20,16 @@ namespace wsad_app.Controllers
         /// To Create an user account for my application
         /// </summary>
         /// <returns>ViewResult for the create</returns>
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(AccountCreateViewModel createdUser)
+        {
+            return null;
         }
 
         /// <summary>

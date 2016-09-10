@@ -155,6 +155,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account\AccountCreateViewModel.cs" />
     <Compile Include="Models\Account\AccountLoginViewModel.cs" />
     <Compile Include="Models\Correspondence\ContactEmailViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -202,6 +203,8 @@
     <Content Include="Views\HelloWorld\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Correspondence\Index.cshtml" />
+    <Content Include="Views\Correspondence\emailConfirmation.cshtml" />
+    <Content Include="Views\Account\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
