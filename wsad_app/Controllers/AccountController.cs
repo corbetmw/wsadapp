@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using wsad_app.Models.Account;
 
 namespace wsad_app.Controllers
@@ -36,9 +37,25 @@ namespace wsad_app.Controllers
 
         public ActionResult Login(AccountLoginViewModel login)
         {
-            return Content("Hello " + login.Username + "! welcome to our application. Please have a nice time. Your password is " + login.Password);
 
             //Validate a username and password(no empties)
+            if (login == null)
+            {
+                ModelState.AddModelError("", "Login is required.");
+                return View();
+            }
+
+            if (string.IsNullOrWhiteSpace(login.Username))
+            {
+                ModelState.AddModelError("", "Username is required.");
+                return View();
+            }
+
+            if (string.IsNullOrWhiteSpace(login.Password))
+            {
+                ModelState.AddModelError("", "Password is required.");
+                return View();
+            }
 
             //Open database connection
 
@@ -47,6 +64,9 @@ namespace wsad_app.Controllers
             //If invalid, send error
 
             //If valid, redirect to user profile
+            System.Web.Security.FormsAuthentication.SetAuthCookie(login.Username, login.RememberMe);
+
+            return Redirect(FormsAuthentication.GetRedirectUrl(login.Username, login.RememberMe));
         }
     }
 }

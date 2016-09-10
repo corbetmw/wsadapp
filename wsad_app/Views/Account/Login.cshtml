@@ -4,15 +4,12 @@
 }
 
 <h2>Login</h2>
-
+@Html.ValidationSummary()
 <form method="post" action="/Account/Login">
-    <legend>Login Page</legend>
     <label>Username: </label>
-        @Html.TextBoxFor(model => model.Username)
-        @*<input type="text" name="username" />*@ <br />
+        @Html.TextBoxFor(model => model.Username) <br />
     <label>Password: </label>
-        @Html.PasswordFor(model => model.Password)
-        @*<input type="password" name="password" />*@ <br />
+        @Html.PasswordFor(model => model.Password) <br />
     <label>Remember Me</label>
         @Html.CheckBoxFor(model => model.RememberMe) <br />
     <button type="submit" name="login">Log In</button>
