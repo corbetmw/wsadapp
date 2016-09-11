@@ -29,7 +29,33 @@ namespace wsad_app.Controllers
         [HttpPost]
         public ActionResult Create(AccountCreateViewModel createdUser)
         {
-            return null;
+            //Validate the account information
+            if (createdUser == null)
+            {
+                ModelState.AddModelError("", "No information was given");
+            }
+
+            if (string.IsNullOrWhiteSpace(createdUser.FirstName) ||
+               string.IsNullOrWhiteSpace(createdUser.LastName) ||
+               string.IsNullOrWhiteSpace(createdUser.EmailAddress) ||
+               string.IsNullOrWhiteSpace(createdUser.Gender) ||
+               string.IsNullOrWhiteSpace(createdUser.UserName) ||
+               string.IsNullOrWhiteSpace(createdUser.Password) ||
+               string.IsNullOrWhiteSpace(createdUser.ConfirmPassword))
+            {
+                ModelState.AddModelError("", "All fields are required");
+                return View();
+            }
+
+            if(createdUser.Password != createdUser.ConfirmPassword)
+            {
+                ModelState.AddModelError("", "Your password does not match");
+                return View();
+            }
+
+            //Show user creation page with inforation they gave
+
+            return View("Confirmation", createdUser);
         }
 
         /// <summary>

@@ -1,0 +1,19 @@
+﻿@model wsad_app.Models.Account.AccountCreateViewModel
+
+@{
+    ViewBag.Title = "Confirmation";
+}
+
+<h2>Confirmation</h2>
+
+<h3>
+    Welcome,
+    @Html.DisplayFor(model => model.FirstName)
+    @Html.DisplayFor(model => model.LastName)
+    !
+</h3> <br />
+<p>
+    An account has been created with username <b>@Html.DisplayFor(model => model.UserName)</b>.<br />
+    Please check <b>@Html.DisplayFor(model => model.EmailAddress)</b> to activate your account.
+</p>
+
