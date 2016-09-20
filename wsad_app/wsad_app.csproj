@@ -165,6 +165,7 @@
     </Compile>
     <Compile Include="Models\Account\AccountCreateViewModel.cs" />
     <Compile Include="Models\Account\AccountLoginViewModel.cs" />
+    <Compile Include="Models\Account\UserProfileViewModel.cs" />
     <Compile Include="Models\Correspondence\ContactEmailViewModel.cs" />
     <Compile Include="Models\DataAccess\User.cs" />
     <Compile Include="Models\DataAccess\wsadDbContext.cs" />
@@ -220,6 +221,8 @@
     <Content Include="Views\Correspondence\emailConfirmation.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Account\Confirmation.cshtml" />
+    <Content Include="Views\Account\UserInformationPartial.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

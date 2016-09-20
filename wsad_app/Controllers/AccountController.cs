@@ -135,7 +135,15 @@ namespace wsad_app.Controllers
             //If invalid, send error
             if (isValidLogin)
             {
-                return Content("Good Login!");
+                //Create a security ticket
+                FormsAuthentication.SetAuthCookie(login.Username, login.RememberMe);
+                //Store the ticket in a cookie
+                string redirectToUrl = FormsAuthentication.GetRedirectUrl(
+                    login.Username,
+                    login.RememberMe
+                );
+                //Redirect to home page, or wherever
+                return Redirect(redirectToUrl);
             }
             else
             {
@@ -146,6 +154,32 @@ namespace wsad_app.Controllers
             //System.Web.Security.FormsAuthentication.SetAuthCookie(login.Username, login.RememberMe);
 
             //return Redirect(FormsAuthentication.GetRedirectUrl(login.Username, login.RememberMe));
+        }
+
+        public ActionResult UserInformationPartial()
+        {
+            return PartialView();
+        }
+
+        public ActionResult UserProfile()
+        {
+            //Build a DbContext
+            wsadDbContext context = new wsadDbContext();
+
+            //Get my user DTO from database
+            User userDTO = context.Users.FirstOrDefault(row => row.UserName == User.Identity.Name);
+
+            //Build UserProfile ViewModel
+            UserProfileViewModel userProfileVM = new UserProfileViewModel(userDTO);
+
+            //Return View with ViewModel
+            return View(userProfileVM);
+        }
+
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

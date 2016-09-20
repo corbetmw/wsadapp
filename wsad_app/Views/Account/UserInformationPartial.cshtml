@@ -1,0 +1,10 @@
+﻿@if (Request.IsAuthenticated)
+{
+    @Html.ActionLink(User.Identity.Name)
+    @Html.ActionLink("Sign Out","LogOut","Account")
+    <a href="#">You're Logged In!</a>
+}
+else
+{
+    @Html.ActionLink("Log in", "Login", "Account")
+}
