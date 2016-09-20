@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using wsad_app.Models.Account;
+using wsad_app.Models.DataAccess;
 
 namespace wsad_app.Controllers
 {
@@ -22,14 +23,19 @@ namespace wsad_app.Controllers
         /// <returns>ViewResult for the create</returns>
         [HttpGet]
         public ActionResult Create()
-        {
-            return View();
+        {    
+            return View("Create");
         }
 
         [HttpPost]
         public ActionResult Create(AccountCreateViewModel createdUser)
         {
             //Validate the account information
+            if (!ModelState.IsValid)
+            {
+                return View(createdUser);
+            }
+
             if (createdUser == null)
             {
                 ModelState.AddModelError("", "No information was given");
@@ -47,15 +53,46 @@ namespace wsad_app.Controllers
                 return View();
             }
 
-            if(createdUser.Password != createdUser.ConfirmPassword)
+            if(!createdUser.Password.Equals(createdUser.ConfirmPassword))
             {
                 ModelState.AddModelError("", "Your password does not match");
                 return View();
             }
 
-            //Show user creation page with inforation they gave
+            //Create Database connectoin
+            using (wsadDbContext context = new wsadDbContext())
+            {
+                if (context.Users.Any(
+                    row => row.UserName.Equals(createdUser.UserName)
+                    ))
+                {
+                    ModelState.AddModelError("", "Username " + createdUser.UserName + " already exists. Please select another.");
+                    createdUser.UserName = "";
+                    return View(createdUser);
+                }
 
-            return View("Confirmation", createdUser);
+                //Setup insert into database
+                Models.DataAccess.User newUserObj;
+                newUserObj = new Models.DataAccess.User()
+                {
+                    FirstName = createdUser.FirstName,
+                    LastName = createdUser.LastName,
+                    EmailAddress = createdUser.EmailAddress,
+                    Gender = createdUser.Gender,
+                    UserName = createdUser.UserName,
+                    Password = createdUser.Password,
+                    EmailOpt = createdUser.EmailOpt
+                };
+
+                //Commit the insert
+                newUserObj = context.Users.Add(newUserObj);
+                context.SaveChanges();
+            }
+
+            //Show user creation page with inforation they gave
+            TempData["Message"] = "Account Creation Successful";
+            return RedirectToAction("Login");
+            //return View("Confirmation", createdUser);
         }
 
         /// <summary>
@@ -68,6 +105,7 @@ namespace wsad_app.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult Login(AccountLoginViewModel login)
         {
 
@@ -91,15 +129,23 @@ namespace wsad_app.Controllers
             }
 
             //Open database connection
-
+            wsadDbContext context = new wsadDbContext();
             //Query for username and passowrd hash
-
+            bool isValidLogin = context.Users.Any(row => row.UserName == login.Username && row.Password == login.Password);
             //If invalid, send error
-
+            if (isValidLogin)
+            {
+                return Content("Good Login!");
+            }
+            else
+            {
+                TempData["Message"] = "That's not a proper username or password!";
+                    return View();
+            }
             //If valid, redirect to user profile
-            System.Web.Security.FormsAuthentication.SetAuthCookie(login.Username, login.RememberMe);
+            //System.Web.Security.FormsAuthentication.SetAuthCookie(login.Username, login.RememberMe);
 
-            return Redirect(FormsAuthentication.GetRedirectUrl(login.Username, login.RememberMe));
+            //return Redirect(FormsAuthentication.GetRedirectUrl(login.Username, login.RememberMe));
         }
     }
 }
