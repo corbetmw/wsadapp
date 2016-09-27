@@ -81,7 +81,8 @@ namespace wsad_app.Controllers
                     Gender = createdUser.Gender,
                     UserName = createdUser.UserName,
                     Password = createdUser.Password,
-                    EmailOpt = createdUser.EmailOpt
+                    EmailOpt = createdUser.EmailOpt,
+                    IsAdmin = createdUser.IsAdmin
                 };
 
                 //Commit the insert
@@ -95,10 +96,6 @@ namespace wsad_app.Controllers
             //return View("Confirmation", createdUser);
         }
 
-        /// <summary>
-        /// Logging users into the website
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public ActionResult Login()
         {
@@ -108,7 +105,6 @@ namespace wsad_app.Controllers
         [HttpPost]
         public ActionResult Login(AccountLoginViewModel login)
         {
-
             //Validate a username and password(no empties)
             if (login == null)
             {
@@ -128,32 +124,33 @@ namespace wsad_app.Controllers
                 return View();
             }
 
-            //Open database connection
-            wsadDbContext context = new wsadDbContext();
-            //Query for username and passowrd hash
-            bool isValidLogin = context.Users.Any(row => row.UserName == login.Username && row.Password == login.Password);
-            //If invalid, send error
-            if (isValidLogin)
+            bool isValid = false;
+            using (wsadDbContext context = new wsadDbContext())
             {
-                //Create a security ticket
-                FormsAuthentication.SetAuthCookie(login.Username, login.RememberMe);
-                //Store the ticket in a cookie
-                string redirectToUrl = FormsAuthentication.GetRedirectUrl(
-                    login.Username,
-                    login.RememberMe
-                );
-                //Redirect to home page, or wherever
-                return Redirect(redirectToUrl);
-            }
-            else
-            {
-                TempData["Message"] = "That's not a proper username or password!";
-                    return View();
-            }
-            //If valid, redirect to user profile
-            //System.Web.Security.FormsAuthentication.SetAuthCookie(login.Username, login.RememberMe);
+                //hash password
 
-            //return Redirect(FormsAuthentication.GetRedirectUrl(login.Username, login.RememberMe));
+                //Query for the user based on username and password hash
+                if (context.Users.Any(
+                    row => row.UserName.Equals(login.Username)
+                    && row.Password.Equals(login.Password)
+                    ))
+                {
+                    isValid = true;
+                }
+            }
+
+            //If invalid, send error
+            if (!isValid)
+            {
+                ModelState.AddModelError("", "Invalid UserName or Password");
+                return View();
+            }
+            else {
+                //Valid, redirect to user profile
+                System.Web.Security.FormsAuthentication.SetAuthCookie(login.Username, login.RememberMe);
+
+                return Redirect(FormsAuthentication.GetRedirectUrl(login.Username, login.RememberMe));
+            }
         }
 
         public ActionResult UserInformationPartial()
@@ -180,6 +177,86 @@ namespace wsad_app.Controllers
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            //Get the user by Id
+            EditViewModel editVM;
+            using (wsadDbContext context = new wsadDbContext())
+            {
+                //Get user from database
+                User userDTO = context.Users.Find(id);
+
+                if (userDTO == null)
+                {
+                    return Content("Invalid Id");
+                }
+                //Create an EditViewModel
+                editVM = new EditViewModel()
+                {
+                    EmailAddress = userDTO.EmailAddress,
+                    FirstName = userDTO.FirstName,
+                    Id = userDTO.Id,
+                    LastName = userDTO.LastName,
+                    UserName = userDTO.UserName,
+                    IsAdmin = userDTO.IsAdmin
+                };
+            }
+
+            
+            //Send the ViewModel to the view
+            return View(editVM);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditViewModel editVM)
+        {
+            //Varilables
+            bool needsPasswordReset = false;
+            //Validate the model
+            if (!ModelState.IsValid)
+            {
+                return View(editVM);
+            }
+            //Check for a password change
+            if (string.IsNullOrWhiteSpace(editVM.Password))
+            {
+                //compare password with password confirm
+                if (!editVM.Password.Equals(editVM.PasswordConfirm))
+                {
+                    ModelState.AddModelError("", "Both Passwords must match!");
+                }
+                else
+                {
+                    needsPasswordReset = true;
+                }
+            }
+
+            //Get user from datbase
+            using (wsadDbContext context = new wsadDbContext())
+            {
+                //Get DTO
+                User userDTO = context.Users.Find(editVM.Id);
+                if (userDTO == null){ return Content("Invalid User Id"); }
+
+                //Set or update values from the view model
+                userDTO.FirstName = editVM.FirstName;
+                userDTO.EmailAddress = editVM.EmailAddress;
+                userDTO.LastName = editVM.LastName;
+                userDTO.UserName = editVM.UserName;
+                userDTO.IsAdmin = editVM.IsAdmin;
+                if (needsPasswordReset)
+                {
+                    userDTO.Password = editVM.Password;
+                }
+
+                //Save changes
+                context.SaveChanges();
+            }
+                
+                return RedirectToAction("UserProfile");
         }
     }
 }

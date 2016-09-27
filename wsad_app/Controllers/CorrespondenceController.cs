@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using wsad_app.Models.Correspondence;
+using wsad_app.Models.DataAccess;
 
 namespace wsad_app.Controllers
 {
@@ -50,12 +51,28 @@ namespace wsad_app.Controllers
             email.IsBodyHtml = false;
 
 
-            //Setup an SMTP client to send the message
+            //Setup an SMTP client to send the messages
             System.Net.Mail.SmtpClient smptClient = new System.Net.Mail.SmtpClient();
             smptClient.Host = "smtp.fuse.net";
 
             //Send the message
             smptClient.Send(email);
+
+            //Create an instance on our DbContext
+            using (wsadDbContext context = new wsadDbContext())
+            {
+                //Create Correspondence DTO
+                Correspondence newCorrespondenceDTO = new Correspondence()
+                {
+                    Name = contactMessage.Name,
+                    Email = contactMessage.Email,
+                    Message = contactMessage.Message
+                };
+                //Add to DbContext
+                context.Correspondences.Add(newCorrespondenceDTO);
+                //Save Changes
+                context.SaveChanges();
+            }
 
             //Notify the user that the message was sent
             return View("emailConfirmation");

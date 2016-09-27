@@ -6,19 +6,25 @@
 <h2>Login</h2>
 @if (TempData["Message"] != null)
 {
-<div class="alert alert-success">
-    <span class="glyphicon glyphicon-information"></span>
-    @TempData["Message"]
-</div>
+    <div class="alert alert-warning">
+        <span class="glyphicon glyphicon-information text-warning"></span>
+        @TempData["Message"]
+    </div>
 }
-@Html.ValidationSummary()
 <form method="post" action="/Account/Login">
-    <label>Username: </label>
-        @Html.TextBoxFor(model => model.Username) <br />
-    <label>Password: </label>
-        @Html.PasswordFor(model => model.Password) <br />
-    <label>Remember Me</label>
-        @Html.CheckBoxFor(model => model.RememberMe) <br />
-    <button type="submit" name="login">Log In</button>
-    <a href="/Account/Create">Create and Account</a>
+    <fieldset>
+        <legend>Login</legend>
+        <label>User Name: </label>
+        @Html.TextBoxFor(model => model.Username)
+        @*<input type="text" name="Username" />*@
+        <br />
+        <label>Password:</label>
+        @Html.PasswordFor(model => model.Password)
+        @*    <input type="password" name="password" />*@
+        <br />
+        <label>Remember Me</label>
+        @Html.CheckBoxFor(model => model.RememberMe)
+        <br />
+        <button type="submit">Login</button>
+    </fieldset>
 </form>
