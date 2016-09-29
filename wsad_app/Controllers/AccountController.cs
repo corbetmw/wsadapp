@@ -9,24 +9,77 @@ using wsad_app.Models.DataAccess;
 
 namespace wsad_app.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         // GET: Account
-        public ActionResult Index()
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult Login()
         {
-            return this.RedirectToAction("Login");
+            return View();
         }
 
-        /// <summary>
-        /// To Create an user account for my application
-        /// </summary>
-        /// <returns>ViewResult for the create</returns>
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Login(AccountLoginViewModel login)
+        {
+            //Validate a username and password(no empties)
+            if (login == null)
+            {
+                ModelState.AddModelError("", "Login is required.");
+                return View();
+            }
+
+            if (string.IsNullOrWhiteSpace(login.Username))
+            {
+                ModelState.AddModelError("", "Username is required.");
+                return View();
+            }
+
+            if (string.IsNullOrWhiteSpace(login.Password))
+            {
+                ModelState.AddModelError("", "Password is required.");
+                return View();
+            }
+
+            bool isValid = false;
+            using (wsadDbContext context = new wsadDbContext())
+            {
+                //hash password
+
+                //Query for the user based on username and password hash
+                if (context.Users.Any(
+                    row => row.UserName.Equals(login.Username)
+                    && row.Password.Equals(login.Password)
+                    ))
+                {
+                    isValid = true;
+                }
+            }
+
+            //If invalid, send error
+            if (!isValid)
+            {
+                ModelState.AddModelError("", "Invalid UserName or Password");
+                return View();
+            }
+            else {
+                //Valid, redirect to user profile
+                System.Web.Security.FormsAuthentication.SetAuthCookie(login.Username, login.RememberMe);
+
+                return Redirect(FormsAuthentication.GetRedirectUrl(login.Username, login.RememberMe));
+            }
+        }
+
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult Create()
         {    
             return View("Create");
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Create(AccountCreateViewModel createdUser)
         {
@@ -94,63 +147,6 @@ namespace wsad_app.Controllers
             TempData["Message"] = "Account Creation Successful";
             return RedirectToAction("Login");
             //return View("Confirmation", createdUser);
-        }
-
-        [HttpGet]
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Login(AccountLoginViewModel login)
-        {
-            //Validate a username and password(no empties)
-            if (login == null)
-            {
-                ModelState.AddModelError("", "Login is required.");
-                return View();
-            }
-
-            if (string.IsNullOrWhiteSpace(login.Username))
-            {
-                ModelState.AddModelError("", "Username is required.");
-                return View();
-            }
-
-            if (string.IsNullOrWhiteSpace(login.Password))
-            {
-                ModelState.AddModelError("", "Password is required.");
-                return View();
-            }
-
-            bool isValid = false;
-            using (wsadDbContext context = new wsadDbContext())
-            {
-                //hash password
-
-                //Query for the user based on username and password hash
-                if (context.Users.Any(
-                    row => row.UserName.Equals(login.Username)
-                    && row.Password.Equals(login.Password)
-                    ))
-                {
-                    isValid = true;
-                }
-            }
-
-            //If invalid, send error
-            if (!isValid)
-            {
-                ModelState.AddModelError("", "Invalid UserName or Password");
-                return View();
-            }
-            else {
-                //Valid, redirect to user profile
-                System.Web.Security.FormsAuthentication.SetAuthCookie(login.Username, login.RememberMe);
-
-                return Redirect(FormsAuthentication.GetRedirectUrl(login.Username, login.RememberMe));
-            }
         }
 
         public ActionResult UserInformationPartial()

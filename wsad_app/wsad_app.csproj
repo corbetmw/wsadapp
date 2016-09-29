@@ -160,6 +160,7 @@
     <Compile Include="Controllers\CorrespondenceController.cs" />
     <Compile Include="Controllers\HelloWorldController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserManagerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -167,10 +168,13 @@
     <Compile Include="Models\Account\AccountLoginViewModel.cs" />
     <Compile Include="Models\Account\EditViewModel.cs" />
     <Compile Include="Models\Account\UserProfileViewModel.cs" />
+    <Compile Include="Models\Business\UserManager.cs" />
     <Compile Include="Models\Correspondence\ContactEmailViewModel.cs" />
     <Compile Include="Models\DataAccess\Correspondence.cs" />
     <Compile Include="Models\DataAccess\User.cs" />
     <Compile Include="Models\DataAccess\wsadDbContext.cs" />
+    <Compile Include="Models\UserManager\UserManager_CreateEditViewModel.cs" />
+    <Compile Include="Models\UserManager\UserManager_UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +230,11 @@
     <Content Include="Views\Account\UserInformationPartial.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\UserManager\Index.cshtml" />
+    <Content Include="Views\UserManager\Create.cshtml" />
+    <Content Include="Views\UserManager\Edit.cshtml" />
+    <Content Include="Views\UserManager\Delete.cshtml" />
+    <Content Include="Views\UserManager\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
