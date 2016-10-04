@@ -160,6 +160,11 @@
     <Compile Include="Controllers\CorrespondenceController.cs" />
     <Compile Include="Controllers\HelloWorldController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Models\Business\ShoppingCartManager.cs" />
+    <Compile Include="Models\Inventory\ProductViewModel.cs" />
+    <Compile Include="Controllers\SessionManagerController.cs" />
     <Compile Include="Controllers\UserManagerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -168,11 +173,16 @@
     <Compile Include="Models\Account\AccountLoginViewModel.cs" />
     <Compile Include="Models\Account\EditViewModel.cs" />
     <Compile Include="Models\Account\UserProfileViewModel.cs" />
+    <Compile Include="Models\Business\InventoryManager.cs" />
     <Compile Include="Models\Business\UserManager.cs" />
     <Compile Include="Models\Correspondence\ContactEmailViewModel.cs" />
     <Compile Include="Models\DataAccess\Correspondence.cs" />
+    <Compile Include="Models\DataAccess\Product.cs" />
+    <Compile Include="Models\DataAccess\Session.cs" />
+    <Compile Include="Models\DataAccess\ShoppingCart.cs" />
     <Compile Include="Models\DataAccess\User.cs" />
     <Compile Include="Models\DataAccess\wsadDbContext.cs" />
+    <Compile Include="Models\SessionManager\SessionManager_SessionViewModel.cs" />
     <Compile Include="Models\UserManager\UserManager_CreateEditViewModel.cs" />
     <Compile Include="Models\UserManager\UserManager_UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -235,8 +245,12 @@
     <Content Include="Views\UserManager\Edit.cshtml" />
     <Content Include="Views\UserManager\Delete.cshtml" />
     <Content Include="Views\UserManager\Details.cshtml" />
+    <Content Include="Views\SessionManager\Index.cshtml" />
+    <Content Include="Views\Inventory\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\ShoppingCart\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
