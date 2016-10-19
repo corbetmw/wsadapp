@@ -258,6 +258,7 @@
     <Content Include="Views\ShoppingCart\Index.cshtml" />
     <Content Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\SessionCart\Index.cshtml" />
+    <Content Include="Views\Schedule\SessionInformationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

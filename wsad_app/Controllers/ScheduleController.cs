@@ -50,5 +50,10 @@ namespace wsad_app.Controllers
             //Redirect to Shopping Cart View
             return RedirectToAction("Index", "SessionCart");
         }
+
+        public ActionResult SessionInformationPartial()
+        {
+            return PartialView();
+        }
     }
 }

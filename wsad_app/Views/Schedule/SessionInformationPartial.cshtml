@@ -1,0 +1,5 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <li>@Html.ActionLink("Register for Sessions", "Index", "Schedule") </li>
+    <li>@Html.ActionLink("My Schedule", "Index", "SessionCart")</li>
+}
