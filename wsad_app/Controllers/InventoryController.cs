@@ -14,37 +14,41 @@ namespace wsad_app.Controllers
         // GET: Inventory
         public ActionResult Index()
         {
-            //Build Inventory Mangaer
+            //Build ScheduleManager
             InventoryManager invMgr = new InventoryManager();
 
-            //egt products from mangfere
+            //Get Products from Manager
             IQueryable<Product> allProducts;
-            allProducts = InventoryManager.GetAllProducts();
-            //Build viewmodesl fo cprocuts
+            allProducts = invMgr.GetAllProducts();
+
+            //Build ViewModels of Products
             List<ProductViewModel> productVM = new List<ProductViewModel>();
             foreach (Product p in allProducts)
             {
                 productVM.Add(new ProductViewModel(p));
             }
-            //Send procut viewmodels to view
 
-            return View();
+            //Send Product View Models to View
+            return View(productVM);
         }
         
         [HttpPost]
         public ActionResult Index(List<ProductViewModel> allProductsVM)
         {
-            //filter all procuts biewmodel to be slecetony only
+            //Filter all Products View Model to be selected only
             allProductsVM = allProductsVM.Where(p => p.IsSelected == true).ToList();
-            //build shpping car manger
+
+            //Build ShoppingCart Manager
             ShoppingCartManager cartMgr = new ShoppingCartManager();
-            //add selected productss to shpping cart
+
+            //Add Selected Products to the ShoppingCart
             foreach (ProductViewModel prodVM in allProductsVM)
             {
                 cartMgr.AddToCart(User.Identity.Name, prodVM.Id);
             }
-            //redirect ot shopping cart view
-            return RedirectToAction("Index", "Index")
+
+            //Redirect to Shopping Cart View
+            return RedirectToAction("Index", "ShoppingCart");
         }
     }
 }

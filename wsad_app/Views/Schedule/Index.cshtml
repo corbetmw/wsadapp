@@ -1,0 +1,58 @@
+﻿@model List<wsad_app.Models.Schedule.SessionViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<br />
+<h2>Sessions</h2>
+
+@using (Html.BeginForm())
+{
+<table class="table">
+    <tr>
+        <th>
+            &nbsp;
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            Total Seats
+        </th>
+        <th>
+            Building
+        </th>
+        <th>
+            Room
+        </th>
+        <th></th>
+    </tr>
+
+@for (int i =0; i < Model.Count; i++)
+{
+    <tr>
+        <td>
+            @Html.HiddenFor(model => Model[i].Id)
+            @Html.CheckBoxFor(model => Model[i].IsSelected)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model[i].Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model[i].TotalSeats)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model[i].Building)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model[i].Room)
+        </td>
+    </tr>
+}
+
+</table>
+
+<button type="submit" class="btn btn-primary">Register</button>
+}

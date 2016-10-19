@@ -1,7 +1,8 @@
 ﻿@if (Request.IsAuthenticated)
 {
-    @Html.ActionLink("(" + User.Identity.Name + ")", "UserProfile", "Account")
-    @Html.ActionLink("Sign Out", "LogOut", "Account")
+    <li>@Html.ActionLink("(" + User.Identity.Name + ")", "UserProfile", "Account") </li>
+
+    <li>@Html.ActionLink("Sign Out", "LogOut", "Account")</li>
 }
 else
 {

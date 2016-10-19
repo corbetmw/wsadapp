@@ -161,8 +161,13 @@
     <Compile Include="Controllers\HelloWorldController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\ScheduleController.cs" />
+    <Compile Include="Controllers\SessionCartController.cs" />
+    <Compile Include="Controllers\SessionCartManager.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
-    <Compile Include="Models\Business\ShoppingCartManager.cs" />
+    <Compile Include="Controllers\ShoppingCartManager.cs" />
+    <Compile Include="Models\Business\ScheduleManager.cs" />
+    <Compile Include="Models\DataAccess\SessionCart.cs" />
     <Compile Include="Models\Inventory\ProductViewModel.cs" />
     <Compile Include="Controllers\SessionManagerController.cs" />
     <Compile Include="Controllers\UserManagerController.cs" />
@@ -182,7 +187,10 @@
     <Compile Include="Models\DataAccess\ShoppingCart.cs" />
     <Compile Include="Models\DataAccess\User.cs" />
     <Compile Include="Models\DataAccess\wsadDbContext.cs" />
+    <Compile Include="Models\Schedule\SessionViewModel.cs" />
+    <Compile Include="Models\SessionCart\SessionCartViewModel.cs" />
     <Compile Include="Models\SessionManager\SessionManager_SessionViewModel.cs" />
+    <Compile Include="Models\ShoppingCart\ShoppingCartViewModel.cs" />
     <Compile Include="Models\UserManager\UserManager_CreateEditViewModel.cs" />
     <Compile Include="Models\UserManager\UserManager_UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -247,10 +255,11 @@
     <Content Include="Views\UserManager\Details.cshtml" />
     <Content Include="Views\SessionManager\Index.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
+    <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\Schedule\Index.cshtml" />
+    <Content Include="Views\SessionCart\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\ShoppingCart\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

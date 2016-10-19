@@ -1,54 +1,52 @@
 ﻿@model List<wsad_app.Models.Inventory.ProductViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Products";
 }
+<br />
+<br />
+<h2>Products</h2>
 
-<h2>Index</h2>
+@using (Html.BeginForm())
+{
+    <table class="table">
+        <tr>
+            <th>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Unit Price
+            </th>
+            <th>
+                Description
+            </th>
+            <th></th>
+        </tr>
 
-<table class="table">
-    <tr>
-        <th>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(model => Model[i].Id)
+                    @Html.CheckBoxFor(model => Model[i].IsSelected)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model[i].Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model[i].UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model[i].Description)
+                </td>
+                <td></td>
+            </tr>
+        }
 
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-            Unit Price
-        </th>
-        <th>
-            Description
-        </th>
-        <th></th>
-    </tr>
+    </table>
 
-@for (int i = 0; i< Model.Count;i++) {
-    <tr>
-        <td>
-            @Html.HiddenFor(model => Model[i].Id)
-            @Html.CheckBoxFor(model => Model[i].IsSelected)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model[i].Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model[i].UnitPrice.ToString(""))
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model[i].Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id= Model[i].Id }) |
-            @Html.ActionLink("Details", "Details", new { id= Model[i].Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id= Model[i].Id })
-        </td>
-    </tr>
+    <button type="submit" class="btn btn-primary">Add To Cart</button>
 }
-
-</table>
-<button type="submit" class="btn btn-primary"></button>

@@ -18,5 +18,6 @@ namespace wsad_app.Models.DataAccess
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<SessionCart> SessionCarts { get; set; }
     }
 }

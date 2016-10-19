@@ -7,22 +7,21 @@ using System.Web;
 
 namespace wsad_app.Models.DataAccess
 {
-    [Table("ShoppingCart")]
-    public class ShoppingCart
+    [Table("SessionCart")]
+    public class SessionCart
     {
         [Key]
         public int Id { get; set; }
         [Column("User_Id")]
         public int UserId { get; set; }
-        [Column("Product_Id")]
-        public int ProductId { get; set; }
-        public int Quantity { get; set; }
+        [Column("Session_Id")]
+        public int SessionId { get; set; }
         public DateTime DateAdded { get; set; }
         public bool IsActive { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
-        [ForeignKey("ProductId")]
-        public virtual Product Product { get; set; }
+        [ForeignKey("SessionId")]
+        public virtual Session Session { get; set; }
     }
 }

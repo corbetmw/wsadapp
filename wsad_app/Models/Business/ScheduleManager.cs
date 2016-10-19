@@ -7,13 +7,13 @@ using wsad_app.Models.DataAccess;
 
 namespace wsad_app.Models.Business
 {
-    public class InventoryManager
+    public class ScheduleManager
     {
-        internal IQueryable<Product> GetAllProducts(bool asNoTracking = false)
+        internal IQueryable<Session> GetAllSessions(bool asNoTracking = false)
         {
             wsadDbContext context = new wsadDbContext();
 
-            IQueryable<Product> results = context.Products;
+            IQueryable<Session> results = context.Sessions;
 
             if (asNoTracking == false)
             {
