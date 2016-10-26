@@ -167,7 +167,9 @@
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\ShoppingCartManager.cs" />
     <Compile Include="Models\Business\ScheduleManager.cs" />
+    <Compile Include="Models\DataAccess\Role.cs" />
     <Compile Include="Models\DataAccess\SessionCart.cs" />
+    <Compile Include="Models\DataAccess\User_Role.cs" />
     <Compile Include="Models\Inventory\ProductViewModel.cs" />
     <Compile Include="Controllers\SessionManagerController.cs" />
     <Compile Include="Controllers\UserManagerController.cs" />

@@ -10,6 +10,7 @@ using wsad_app.Models.UserManager;
 
 namespace wsad_app.Controllers
 {
+    [Authorize(Roles ="SystemAdmin,UserManager")]
     public class UserManagerController : Controller
     {
         // GET: UserManager
@@ -21,7 +22,7 @@ namespace wsad_app.Controllers
             UserManager userMgr = new UserManager();
 
             //Query all users from the DbContext
-            IQueryable<User> allUsers = userMgr.GetAllUsers();
+            IEnumerable<User> allUsers = userMgr.GetAllUsers();
 
             //Convert the user DTO into user ViewModel
             foreach (User userDTO in allUsers)

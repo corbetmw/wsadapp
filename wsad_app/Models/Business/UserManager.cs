@@ -48,6 +48,19 @@ namespace wsad_app.Models.Business
             }
         }
 
+        //internal IQueryable<User_Role> GetUserRoles(int userId)
+        //{
+        //    //dbcontext
+        //    wsadDbContext context = new wsadDbContext();
+
+        //    //Select User_Roles based on user_Id
+        //    IQueryable<User_Role> matches = context.UserRoles.Where(row => row.User_Id == userId);
+
+        //    //REturn results -- matching user_roles
+        //    return matches;
+
+        //}
+
         public IQueryable<User> GetAllUsers()
         {
             wsadDbContext context = new wsadDbContext();

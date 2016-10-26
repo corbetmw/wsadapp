@@ -11,6 +11,7 @@ namespace wsad_app.Controllers
 {
     public class ScheduleController : Controller
     {
+        [Authorize]
         // GET: Schedule
         public ActionResult Index()
         {

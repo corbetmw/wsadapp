@@ -8,7 +8,6 @@ using wsad_app.Models.SessionManager;
 
 namespace wsad_app.Controllers
 {
-    [Authorize]
     public class SessionManagerController : Controller
     {
         // GET: SessionManager

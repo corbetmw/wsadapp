@@ -10,6 +10,7 @@ namespace wsad_app.Controllers
 {
     public class SessionCartController : Controller
     {
+        [Authorize]
         // GET: SessionCart
         public ActionResult Index()
         {

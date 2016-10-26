@@ -9,18 +9,16 @@ using wsad_app.Models.DataAccess;
 
 namespace wsad_app.Controllers
 {
-    [Authorize]
+    
     public class AccountController : Controller
     {
         // GET: Account
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult Login()
         {
             return View();
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public ActionResult Login(AccountLoginViewModel login)
         {
@@ -72,14 +70,12 @@ namespace wsad_app.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult Create()
         {    
             return View("Create");
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public ActionResult Create(AccountCreateViewModel createdUser)
         {
