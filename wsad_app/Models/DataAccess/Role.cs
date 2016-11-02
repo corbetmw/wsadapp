@@ -7,7 +7,7 @@ using System.Web;
 
 namespace wsad_app.Models.DataAccess
 {
-    [Table("Roles")]
+    [Table("Role")]
     public class Role
     {
         [Key]

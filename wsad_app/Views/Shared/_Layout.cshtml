@@ -20,13 +20,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        @Html.Action("SessionInformationPartial", "Schedule")
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" },null)</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" },null)</li>
+                        @Html.Action("SessionInformationPartial", "Schedule", new { area = "" })
                 </ul>
                 <ul class="nav navbar-nav navbar-right">                    
-                        @Html.Action("UserInformationPartial", "Account")                   
+                        @Html.Action("UserInformationPartial", "Account", new {area =""})                   
                 </ul>
             </div>
         </div>

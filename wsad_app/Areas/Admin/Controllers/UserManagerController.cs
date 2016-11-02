@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using wsad_app.Models.Business;
 using wsad_app.Models.DataAccess;
-using wsad_app.Models.UserManager;
+using wsad_app.Areas.Admin.Models.UserManager;
 
-namespace wsad_app.Controllers
+namespace wsad_app.Areas.Admin.Controllers
 {
     [Authorize(Roles ="SystemAdmin,UserManager")]
     public class UserManagerController : Controller
@@ -69,7 +67,7 @@ namespace wsad_app.Controllers
 
 
             //Create a user dto template
-            User userTemplate = new Models.DataAccess.User()
+            User userTemplate = new wsad_app.Models.DataAccess.User()
             {
                 EmailAddress = newUserVM.EmailAddress,
                 EmailOpt = newUserVM.EmailOpt,
@@ -132,7 +130,7 @@ namespace wsad_app.Controllers
 
 
             //Create a user dto template
-            User userTemplate = new Models.DataAccess.User()
+            User userTemplate = new wsad_app.Models.DataAccess.User()
             {
                 Id = editUserVM.Id,
                 EmailAddress = editUserVM.EmailAddress,

@@ -7,12 +7,14 @@ using System.Web;
 
 namespace wsad_app.Models.DataAccess
 {
-    [Table("User_Role")]
-    public class User_Role
+    [Table("UserRole")]
+    public class UserRole
     {
         [Key]
+        [Column(Order = 0)]
         public int User_Id { get; set; }
         [Key]
+        [Column(Order = 1)]
         public int Role_Id { get; set; }
 
         [ForeignKey("Role_Id")]

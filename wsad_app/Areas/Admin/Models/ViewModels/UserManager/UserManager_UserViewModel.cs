@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using wsad_app.Models.DataAccess;
 
-namespace wsad_app.Models.UserManager
+namespace wsad_app.Areas.Admin.Models.UserManager
 {
     public class UserManager_UserViewModel
     {

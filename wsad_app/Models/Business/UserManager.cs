@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using wsad_app.Models.DataAccess;
+using System.Data.Entity;
 
 namespace wsad_app.Models.Business
 {
@@ -48,18 +49,21 @@ namespace wsad_app.Models.Business
             }
         }
 
-        //internal IQueryable<User_Role> GetUserRoles(int userId)
-        //{
-        //    //dbcontext
-        //    wsadDbContext context = new wsadDbContext();
+        internal IQueryable<UserRole> GetUserRoles(int userId)
+        {
+            //DbContext
+            wsadDbContext context = new wsadDbContext();
 
-        //    //Select User_Roles based on user_Id
-        //    IQueryable<User_Role> matches = context.UserRoles.Where(row => row.User_Id == userId);
+            //Select User_Roles based on user_Id
+            IQueryable<UserRole> matches = context.UserRoles
+                .Include(x => x.User)
+                .Include(x => x.Role)
+                .Where(row => row.User_Id == userId);
 
-        //    //REturn results -- matching user_roles
-        //    return matches;
+            //Return results -- matching user_roles
+            return matches;
 
-        //}
+        }
 
         public IQueryable<User> GetAllUsers()
         {

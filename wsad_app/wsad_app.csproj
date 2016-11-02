@@ -88,12 +88,24 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -156,7 +168,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Apis\UserApiController.cs" />
     <Compile Include="Controllers\CorrespondenceController.cs" />
     <Compile Include="Controllers\HelloWorldController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -169,10 +184,10 @@
     <Compile Include="Models\Business\ScheduleManager.cs" />
     <Compile Include="Models\DataAccess\Role.cs" />
     <Compile Include="Models\DataAccess\SessionCart.cs" />
-    <Compile Include="Models\DataAccess\User_Role.cs" />
+    <Compile Include="Models\DataAccess\UserRole.cs" />
     <Compile Include="Models\Inventory\ProductViewModel.cs" />
     <Compile Include="Controllers\SessionManagerController.cs" />
-    <Compile Include="Controllers\UserManagerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserManagerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -193,8 +208,8 @@
     <Compile Include="Models\SessionCart\SessionCartViewModel.cs" />
     <Compile Include="Models\SessionManager\SessionManager_SessionViewModel.cs" />
     <Compile Include="Models\ShoppingCart\ShoppingCartViewModel.cs" />
-    <Compile Include="Models\UserManager\UserManager_CreateEditViewModel.cs" />
-    <Compile Include="Models\UserManager\UserManager_UserViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\UserManager\UserManager_CreateEditViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\UserManager\UserManager_UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +230,15 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -250,11 +271,11 @@
     <Content Include="Views\Account\UserInformationPartial.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
-    <Content Include="Views\UserManager\Index.cshtml" />
-    <Content Include="Views\UserManager\Create.cshtml" />
-    <Content Include="Views\UserManager\Edit.cshtml" />
-    <Content Include="Views\UserManager\Delete.cshtml" />
-    <Content Include="Views\UserManager\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManager\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManager\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManager\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManager\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManager\Details.cshtml" />
     <Content Include="Views\SessionManager\Index.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
@@ -262,14 +283,15 @@
     <Content Include="Views\SessionCart\Index.cshtml" />
     <Content Include="Views\Schedule\SessionInformationPartial.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Shared\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

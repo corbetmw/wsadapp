@@ -19,7 +19,7 @@ namespace wsad_app.Models.DataAccess
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<SessionCart> SessionCarts { get; set; }
-        //public DbSet<Role> Roles { get; set; }
-        //public DbSet<User_Role> UserRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
     }
 }

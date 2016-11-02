@@ -1,0 +1,115 @@
+﻿@model IEnumerable<wsad_app.Areas.Admin.Models.UserManager.UserManager_UserViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary"})
+</p>
+<div class="well">
+    @Html.TextBox("search", null, new { placeholder = "Search", id = "searchBox" })
+</div>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailOpt)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr class="rowItem">
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailOpt)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+
+@section scripts{
+    <script>
+        $(function () {
+                    $("#searchBox").on("keyup", function (evnt)
+                    {
+                        //Perform AJAX Call for Matches & Update Table
+                        //apiPath setup
+                        var apiPath = "@Url.Content("~/api/userapi/")";
+
+                        //Append the search text from textbox to apiPath
+                        ///api/userapi/?query=<mytext>
+                        if ($(this).val() == "") {
+                            //Do nothing -- get everyone
+                        }
+                        else {
+                            apiPath += "?query=" + $(this).val();// get the value from the search box
+                        }
+
+                        $.get(apiPath).done(processGoodRequest);
+
+                        function processGoodRequest(data) {
+
+                            //Remove current rows
+                            $(".rowItem").remove();
+
+                            //Loop through all results
+                            for (var i = 0; i < data.length; i++) {
+                                //Create a TR>TD table row for each element in data
+                                var row = $(
+                                    "<tr class='rowItem'>" +
+                                        "<td>" + data[i].UserName + "</td>" +
+                                        "<td>" + data[i].FirstName + "</td>" +
+                                        "<td>" + data[i].LastName + "</td>" +
+                                        "<td>" + data[i].EmailAddress + "</td>" +
+                                        "<td>" + data[i].ExclusiveOffers + "</td>" +
+                                        "<td>" +
+                                            "<a href='@Url.Action("Edit")/" + data[i].Id + "'>Edit</a> " +
+                                            "| <a href='@Url.Action("Details")/" + data[i].Id + "'>Details</a> " +
+                                            "| <a href='@Url.Action("Delete")/" + data[i].Id + "'>Delete</a>" +
+                                        "</td>" +
+
+                                    "</tr>")
+
+                                //Add new rows
+                                $(".table").append(row);
+                            }
+
+                        }
+                    })
+                });
+    </script>    
+}
