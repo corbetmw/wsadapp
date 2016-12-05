@@ -16,7 +16,7 @@ namespace wsad_app.Controllers
         {
             SessionCartManager cartMgr = new SessionCartManager();
 
-            IQueryable<SessionCart> allItems = cartMgr.GetAllItems(User.Identity.Name);
+            IQueryable<SessionCart> allItems = cartMgr.GetAllSessionsByUser(User.Identity.Name);
 
             List<SessionCartViewModel> cartVM = new List<SessionCartViewModel>();
             foreach (var item in allItems)

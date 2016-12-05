@@ -53,13 +53,33 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Sessions & Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
 
 </table>
+
+<div id="detailsModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 @section scripts{
     <script>
@@ -98,7 +118,7 @@
                                         "<td>" + data[i].ExclusiveOffers + "</td>" +
                                         "<td>" +
                                             "<a href='@Url.Action("Edit")/" + data[i].Id + "'>Edit</a> " +
-                                            "| <a href='@Url.Action("Details")/" + data[i].Id + "'>Details</a> " +
+                                            "| <a href='@Url.Action("Sessions & Details")/" + data[i].Id + "'>Details</a> " +
                                             "| <a href='@Url.Action("Delete")/" + data[i].Id + "'>Delete</a>" +
                                         "</td>" +
 
@@ -110,6 +130,7 @@
 
                         }
                     })
+                                 
                 });
     </script>    
 }

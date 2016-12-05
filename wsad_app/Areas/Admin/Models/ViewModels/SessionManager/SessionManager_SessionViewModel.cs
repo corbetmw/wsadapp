@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using wsad_app.Models.DataAccess;
 
-namespace wsad_app.Models.SessionManager
+namespace wsad_app.Areas.Admin.Models.SessionManager
 {
     public class SessionManager_SessionViewModel
     {

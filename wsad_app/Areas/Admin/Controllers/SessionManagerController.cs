@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using wsad_app.Models.DataAccess;
-using wsad_app.Models.SessionManager;
+using wsad_app.Areas.Admin.Models.SessionManager;
 
-namespace wsad_app.Controllers
+namespace wsad_app.Areas.Admin.Controllers
 {
     public class SessionManagerController : Controller
     {

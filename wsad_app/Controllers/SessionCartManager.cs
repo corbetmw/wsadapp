@@ -47,15 +47,14 @@ namespace wsad_app.Controllers
                     DateAdded = DateTime.Now,
                 };
 
-               context.SessionCarts.Add(cartItem);
-                
+                context.SessionCarts.Add(cartItem);
 
                 //Update Database
                 context.SaveChanges();
             }
         }
 
-        internal IQueryable<SessionCart> GetAllItems(string username, bool asNoTracking = false)
+        public IQueryable<SessionCart> GetAllSessionsByUser(string username, bool asNoTracking = false)
         {
             wsadDbContext context = new wsadDbContext();
 
@@ -79,6 +78,43 @@ namespace wsad_app.Controllers
 
             //Return Active Session Cart Items for this user
             return results;
+        }
+
+        public IQueryable<SessionCart> GetAllUsersBySession(int id, bool asNoTracking = false)
+        {
+            wsadDbContext context = new wsadDbContext();
+
+            //Get USer Id from Username
+            int? sessionId = id;
+
+            //Check Username is valid
+            if (sessionId == null) { return null; }
+
+            //Query Items
+            IQueryable<SessionCart> results = context.SessionCarts
+                .Include(row => row.Session)
+                .Where(row => row.SessionId == sessionId.Value && row.IsActive == true);
+
+            //Check for As No Tracking
+            if (asNoTracking == false)
+            {
+                results = results.AsNoTracking();
+            }
+
+            //Return Active Session Cart Items for this user
+            return results;
+        }
+
+        public void DeleteRegistration(int sessionCartId)
+        {
+            using (wsadDbContext context = new wsadDbContext())
+            {
+                SessionCart sessionCartDTO = context.SessionCarts.Find(sessionCartId);
+
+                context.SessionCarts.Remove(sessionCartDTO);
+
+                context.SaveChanges();
+            }
         }
     }
 }
