@@ -304,6 +304,7 @@
     <Content Include="Views\Shared\_UserSessions.cshtml" />
     <Content Include="Views\Shared\_UserEdit.cshtml" />
     <Content Include="Views\Shared\_UserSaveSuccess.cshtml" />
+    <Content Include="Views\SessionCart\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Shared\" />

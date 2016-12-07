@@ -27,5 +27,26 @@ namespace wsad_app.Controllers
             return View(cartVM);
         }
 
+        public ActionResult Delete(int id)
+        {
+            SessionCartManager sessCrtMgr = new SessionCartManager();
+
+            SessionCart sessCart = sessCrtMgr.GetSessionCart(id);
+
+            SessionCartViewModel sessCartVM = new SessionCartViewModel(sessCart);
+
+            return View(sessCartVM);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirm(int id)
+        {
+            SessionCartManager sessCartMgr = new SessionCartManager();
+            sessCartMgr.DeleteRegistration(id);
+
+            //Does the Delete
+            return RedirectToAction("Index");
+        }
     }
 }

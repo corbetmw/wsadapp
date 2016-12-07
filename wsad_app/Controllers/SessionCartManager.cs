@@ -114,6 +114,37 @@ namespace wsad_app.Controllers
             return results;
         }
 
+        internal IQueryable<SessionCart> GetAllSessionCarts(bool asNoTracking = false)
+        {
+            wsadDbContext context = new wsadDbContext();
+
+            IQueryable<SessionCart> results = context.SessionCarts;
+
+            if (asNoTracking == false)
+            {
+                results = results.AsNoTracking();
+            }
+
+            return results;
+        }
+
+        public SessionCart GetSessionCart(int id, bool asNoTracking = false)
+        {
+            wsadDbContext context = new wsadDbContext();
+
+            int sessCartId = id;  
+
+            //Check Username is valid
+            if (sessCartId == null) { return null; }
+
+            //Query Items
+            SessionCart results = GetAllSessionCarts().FirstOrDefault(row => row.Id == sessCartId);
+
+            return results;
+
+        }
+
+
         public void DeleteRegistration(int sessionCartId)
         {
             using (wsadDbContext context = new wsadDbContext())
