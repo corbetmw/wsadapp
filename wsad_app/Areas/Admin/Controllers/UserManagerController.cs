@@ -160,6 +160,7 @@ namespace wsad_app.Areas.Admin.Controllers
             return PartialView("_UserSaveSuccess", null);            
         }
 
+        [HttpGet]
         public ActionResult Details(int id)
         {
             UserManager userMgr = new UserManager();

@@ -14,6 +14,7 @@ namespace wsad_app.Areas.Admin.Models.SessionManager
         }
         public SessionManager_SessionViewModel(Session sessionDTO)
         {
+            Id = sessionDTO.Id;
             Title = sessionDTO.Title;
             Description = sessionDTO.Description;
             Building = sessionDTO.Building;
@@ -23,6 +24,7 @@ namespace wsad_app.Areas.Admin.Models.SessionManager
             DateAndTime = sessionDTO.DateAndTime;
         }
 
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Building { get; set; }
