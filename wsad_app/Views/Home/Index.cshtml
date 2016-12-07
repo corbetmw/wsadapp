@@ -1,8 +1,4 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
-
-<div class="jumbotron">
+﻿<div class="jumbotron">
     <h1>Circus Session Registration</h1>
     <p class="lead">This site will allow you to register for sessions during the 2016 National Circus Convention</p>
     <p><a href="~/Home/About" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
@@ -10,20 +6,31 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Create Account</h2>
-        <p>
-        To create an account an start your registrations for sessions, clikc the button below
-        </p>
-        <p><a class="btn btn-default" href="~/Account/Create">Create Account &raquo;</a></p>
+        @if (Request.IsAuthenticated)
+        {
+            <h2>View Your Sessions</h2>
+            <p>Click below to see everything you've already signed up for</p>
+            <p><a class="btn btn-default" href="~/SessionCart">My Sessions &raquo;</a></p>
+        }
+        else
+        {
+            <h2>Create an Account</h2>
+            <p>Click below to create an account!</p>
+            <p><a class="btn btn-default" href="~/Account/Create">Sign up &raquo;</a></p>
+        }
     </div>
     <div class="col-md-4">
-        <h2>Log In</h2>
-        <p>To log in and register and see your previously registered sessions, click the button below!</p>
-        <p><a class="btn btn-default" href="~/Account/Login">Available Sessions &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Available Sessions</h2>
-        <p>Click the button below to view sessions from balloon animal making to mini motorcycle riding!</p>
-        <p><a class="btn btn-default" href="~/Schedule">My Schedule &raquo;</a></p>
+        @if (Request.IsAuthenticated)
+        {
+            <h2>Register for Sessions!</h2>
+            <p>View the sessions you can sign up for!</p>
+            <p><a class="btn btn-default" href="~/Schedule">Available Sessions &raquo;</a></p>
+        }
+        else
+        {
+            <h2>Log In</h2>
+            <p>To log in and register and see your previously registered sessions, click the button below!</p>
+            <p><a class="btn btn-default" href="~/Account/Login">Log in &raquo;</a></p>
+        }
     </div>
 </div>
