@@ -16,7 +16,7 @@ namespace wsad_app.Controllers.Apis
             SessionCartManager sessCrtMgr = new SessionCartManager();
 
             //Search username
-            var results = sessCrtMgr.GetAllSessionsByUser(username);
+            var results = sessCrtMgr.GetAllSessionsByUser(username,null);
 
             return results;
         }

@@ -16,7 +16,7 @@ namespace wsad_app.Controllers
         {
             SessionCartManager cartMgr = new SessionCartManager();
 
-            IQueryable<SessionCart> allItems = cartMgr.GetAllSessionsByUser(User.Identity.Name);
+            IQueryable<SessionCart> allItems = cartMgr.GetAllSessionsByUser(User.Identity.Name,null);
 
             List<SessionCartViewModel> cartVM = new List<SessionCartViewModel>();
             foreach (var item in allItems)
@@ -26,5 +26,6 @@ namespace wsad_app.Controllers
 
             return View(cartVM);
         }
+
     }
 }

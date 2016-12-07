@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>User Administration (Please perform actions before sorting, we're still working out a bug where the actions don't work after a search has been done)</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary"})
@@ -29,7 +29,7 @@
             @Html.DisplayNameFor(model => model.EmailAddress)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EmailOpt)
+            Actions
         </th>
         <th></th>
     </tr>
@@ -49,88 +49,170 @@
             @Html.DisplayFor(modelItem => item.EmailAddress)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EmailOpt)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Sessions & Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <a href="javascript:void(0);" class="anchorDetail" data-id="@item.Id">Sessions & Details</a> |
+            <a href="javascript:void(0);" class="anchorEdit" data-id="@item.Id">Edit</a> |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
     </tr>
 }
 
 </table>
 
-<div id="detailsModel" class="modal fade" role="dialog">
+<div id='userDetailsModal' class='modal'>
     <div class="modal-dialog">
-
-        <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
-            </div>
-            <div class="modal-body">
-                <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+            <div id='userDetailsModalContent'></div>
+            <div id='userSessionsModalContent'></div>
         </div>
-
     </div>
-</div>
+</div> 
+
+<div id='userEditModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='userEditModalContent'></div>
+        </div>
+    </div>
+</div> 
+
+<div id='userSaveSuccessModal' class='modal'>
+
+</div> 
+
+<div id='userDeleteModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='userDeleteModalContent'></div>
+        </div>
+    </div>
+</div> 
+
+
 
 @section scripts{
     <script>
         $(function () {
-                    $("#searchBox").on("keyup", function (evnt)
-                    {
-                        //Perform AJAX Call for Matches & Update Table
-                        //apiPath setup
-                        var apiPath = "@Url.Content("~/api/userapi/")";
+            $("#searchBox").on("keyup", function (evnt) {
+                //Perform AJAX Call for Matches & Update Table
+                var apiPath = "@Url.Content("~/api/userapi/")";
 
-                        //Append the search text from textbox to apiPath
-                        ///api/userapi/?query=<mytext>
-                        if ($(this).val() == "") {
-                            //Do nothing -- get everyone
-                        }
-                        else {
-                            apiPath += "?query=" + $(this).val();// get the value from the search box
-                        }
+                //Append the search text from textbox to apiPath
+                ///api/userapi/?query=<mytext>
+                if ($(this).val() == "") {
+                    //Do nothing -- get everyone
+                }
+                else {
+                    apiPath += "?query=" + $(this).val();// get the value from the search box
+                }
 
-                        $.get(apiPath).done(processGoodRequest);
+                $.get(apiPath).done(processGoodRequest);
 
-                        function processGoodRequest(data) {
+                function processGoodRequest(data) {
 
-                            //Remove current rows
-                            $(".rowItem").remove();
+                    //Remove current rows
+                    $(".rowItem").remove();
 
-                            //Loop through all results
-                            for (var i = 0; i < data.length; i++) {
-                                //Create a TR>TD table row for each element in data
-                                var row = $(
-                                    "<tr class='rowItem'>" +
-                                        "<td>" + data[i].UserName + "</td>" +
-                                        "<td>" + data[i].FirstName + "</td>" +
-                                        "<td>" + data[i].LastName + "</td>" +
-                                        "<td>" + data[i].EmailAddress + "</td>" +
-                                        "<td>" + data[i].ExclusiveOffers + "</td>" +
-                                        "<td>" +
-                                            "<a href='@Url.Action("Edit")/" + data[i].Id + "'>Edit</a> " +
-                                            "| <a href='@Url.Action("Sessions & Details")/" + data[i].Id + "'>Details</a> " +
-                                            "| <a href='@Url.Action("Delete")/" + data[i].Id + "'>Delete</a>" +
-                                        "</td>" +
+                    //Loop through all results
+                    for (var i = 0; i < data.length; i++) {
+                        //Create a TR>TD table row for each element in data
+                        var row = $(
+                            "<tr class ='rowItem'>" +
+                                "<td>" + data[i].UserName + "</td>" +
+                                "<td>" + data[i].FirstName + "</td>" +
+                                "<td>" + data[i].LastName + "</td>" +
+                                "<td>" + data[i].EmailAddress + "</td>" +
+                                "<td>" +
+                                "<a href='javascript:void(0);' clas s='anchorDetail'  data-id='" + data[i].Id + "'>Sessions & Details</a>" +
+                                " | <a href='javascript:void(0);' class ='anchorEdit'  data-id='" + data[i].Id + "'>Edit</a>" +
+                                " | <a href='@Url.Action("Delete")/" + data[i].Id + "'>Delete</a>" +
+                                "</td>" +
 
-                                    "</tr>")
+                            "</tr>")
 
-                                //Add new rows
-                                $(".table").append(row);
+                        //Add new rows
+                        $(".table").append(row);
+                    }
+
+                }
+            });
+
+            //Load Details & Sessions Modal
+            var UserDetailsURL = '/UserManager/Details';
+            var UserSessionsURL = '/SessionManager/GetRegistrations';
+            $(".anchorDetail").click(function () {
+                        debugger;
+                        var $buttonClicked = $(this);
+                        var id = $buttonClicked.attr('data-id');
+                        var options = { "backdrop": "static", keyboard: true };
+                        $.ajax({
+                            type: "GET",
+                            url: UserDetailsURL,
+                            contentType: "application/json; charset=utf-8",
+                            data: { "Id": id },
+                            datatype: "json",
+                            success: function (data) {
+                                debugger;
+                                $('#userDetailsModalContent').html(data);
+                                $('#userDetailsModal').modal(options);
+                                //Load Sessions for this user
+                                $.ajax({
+                                    type: "GET",
+                                    url: UserSessionsURL,
+                                    contentType: "application/json; charset=utf-8",
+                                    data: { "Id": id },
+                                    datatype: "json",
+                                    success: function (data) {
+                                        debugger;
+                                        $('#userSessionsModalContent').html(data);
+
+                                    },
+                                    error: function () {
+                                        alert("Dynamic content load failed.");
+                                    }
+                                });
+
+                                $('#userDetailsModal').modal('show');
+                            },
+                            error: function () {
+                                alert("Dynamic content load failed.");
                             }
+                        });
+            });
 
-                        }
-                    })
-                                 
+            //Load Edit modal
+            var UserEditURL = '/UserManager/Edit';
+            $(".anchorEdit").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: UserEditURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        debugger;
+                        $('#userEditModalContent').html(data);
+                        $('#userEditModal').modal(options);
+                        $('#userEditModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
                 });
+            });
+
+            $("#closebtn").on('click',function(){
+                        $('#userDetailsModal').modal('hide');
+                    });
+
+            $("#closbtn").click(function () {
+                        $('#userDetailsModal').modal('hide');
+                    });
+
+        });
+
     </script>    
 }

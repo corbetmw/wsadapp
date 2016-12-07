@@ -54,13 +54,22 @@ namespace wsad_app.Controllers
             }
         }
 
-        public IQueryable<SessionCart> GetAllSessionsByUser(string username, bool asNoTracking = false)
+        public IQueryable<SessionCart> GetAllSessionsByUser(string username, int? id, bool asNoTracking = false)
         {
             wsadDbContext context = new wsadDbContext();
 
-            //Get USer Id from Username
-            int? userId = context.Users.Where(x => x.UserName.ToLower() == username.ToLower())
-                .Select(x => x.Id).FirstOrDefault();
+            int? userId;
+
+            //If username is not null, get USer Id from Username
+            if (username != null)
+            {
+                userId = context.Users.Where(x => x.UserName.ToLower() == username.ToLower())
+                    .Select(x => x.Id).FirstOrDefault();
+            }
+            else
+            {
+                userId = id;
+            }
 
             //Check Username is valid
             if (userId == null) { return null; }

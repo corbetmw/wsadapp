@@ -295,6 +295,10 @@
     <Content Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\SessionCart\Index.cshtml" />
     <Content Include="Views\Schedule\SessionInformationPartial.cshtml" />
+    <Content Include="Views\Shared\_UserDetails.cshtml" />
+    <Content Include="Views\Shared\_UserSessions.cshtml" />
+    <Content Include="Views\Shared\_UserEdit.cshtml" />
+    <Content Include="Views\Shared\_UserSaveSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Shared\" />

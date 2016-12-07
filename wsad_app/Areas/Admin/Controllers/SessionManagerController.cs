@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using wsad_app.Models.DataAccess;
 using wsad_app.Areas.Admin.Models.SessionManager;
+using wsad_app.Controllers;
+using wsad_app.Models.SessionCart;
 
 namespace wsad_app.Areas.Admin.Controllers
 {
@@ -30,5 +32,21 @@ namespace wsad_app.Areas.Admin.Controllers
             //Send ViewModel Collection theView              
             return View(collectionOfSessionVM);
         }
+
+        public ActionResult GetRegistrations(int id)
+        {
+            SessionCartManager cartMgr = new SessionCartManager();
+
+            IQueryable<SessionCart> allItems = cartMgr.GetAllSessionsByUser(null, id);
+
+            List<SessionCartViewModel> cartVM = new List<SessionCartViewModel>();
+            foreach (var item in allItems)
+            {
+                cartVM.Add(new SessionCartViewModel(item));
+            }
+
+            return PartialView("_UserSessions", cartVM);
+        }
+
     }
 }

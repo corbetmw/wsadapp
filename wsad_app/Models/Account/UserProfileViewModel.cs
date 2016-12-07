@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using wsad_app.Controllers;
 using wsad_app.Models.DataAccess;
 
 namespace wsad_app.Models.Account
@@ -20,7 +21,6 @@ namespace wsad_app.Models.Account
             LastName = userDTO.LastName;
             UserName = userDTO.UserName;
             Id = userDTO.Id;
-
         }
         public string FirstName { get; set; }
         public string LastName { get; set; }

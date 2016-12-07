@@ -1,0 +1,22 @@
+﻿
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='userSaveSuccessModalContent'>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="userDetailsModalLabel">Success!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>User successfully saved! Please reload the manager to view change.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    $('#userSaveSuccessModal').modal('show');
+
+    setTimeout(function () {
+        $('#userSaveSuccessModal').modal('hide');
+    }, 3000);
+</script>

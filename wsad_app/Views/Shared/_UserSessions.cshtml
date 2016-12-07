@@ -1,0 +1,36 @@
+﻿@model IEnumerable<wsad_app.Models.SessionCart.SessionCartViewModel>
+
+<table class="table">
+    <tr>
+        <th>
+            Session
+        </th>
+        <th>
+            Location
+        </th>
+        <th>
+            Date Added
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <i>@Html.DisplayFor(modelItem => item.Session.Title)</i>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Session.Building)
+                @Html.DisplayFor(modelItem => item.Session.Room)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateAdded)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

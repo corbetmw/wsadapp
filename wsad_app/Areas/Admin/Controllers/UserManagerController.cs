@@ -5,6 +5,8 @@ using System.Web.Mvc;
 using wsad_app.Models.Business;
 using wsad_app.Models.DataAccess;
 using wsad_app.Areas.Admin.Models.UserManager;
+using wsad_app.Models.Account;
+using System.Net;
 
 namespace wsad_app.Areas.Admin.Controllers
 {
@@ -109,7 +111,7 @@ namespace wsad_app.Areas.Admin.Controllers
             //Convert to View Model
             UserManager_CreateEditViewModel userViewModel = new UserManager_CreateEditViewModel(userDTO);
 
-            return View(userViewModel);
+            return PartialView("_UserEdit", userViewModel);
         }
 
         [HttpPost]
@@ -152,23 +154,24 @@ namespace wsad_app.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", "Error occured while saving user to database. " + ex.Message);
-                return View(editUserVM);
             }
 
             //Redirect to Index
-            return RedirectToAction("Index");
+            return PartialView("_UserSaveSuccess", null);            
         }
 
         public ActionResult Details(int id)
         {
             UserManager userMgr = new UserManager();
+
             User userDTO = userMgr.GetUser(id);
 
             if (userDTO == null) { return HttpNotFound("Invalid Id"); }
 
-            UserManager_UserViewModel userVM = new UserManager_UserViewModel(userDTO);
+            UserProfileViewModel userProfVM = new UserProfileViewModel(userDTO);
 
-            return View(userVM);
+            return PartialView("_UserDetails", userProfVM);
+
         }
 
         [HttpGet]
@@ -184,7 +187,7 @@ namespace wsad_app.Areas.Admin.Controllers
             //Returns a Confirm Delete Screen
             return View(userVM);
         }
-
+        
         [HttpPost]
         [ActionName("Delete")]
         public ActionResult DeleteConfirm(int id)

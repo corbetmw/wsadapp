@@ -1,0 +1,71 @@
+﻿@model wsad_app.Models.Account.UserProfileViewModel
+
+<div>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="userDetailsModalLabel">Details</h4>
+    </div>
+    <div class="modal-body">
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmailAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EmailOpt)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EmailOpt)
+            </dd>
+
+        </dl>
+        <hr />
+        <div id='userSessionsModalContent' style="padding:5%;">
+
+        </div>
+    </div>
+</div>  
+
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+
